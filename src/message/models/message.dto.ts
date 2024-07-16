@@ -6,6 +6,8 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
+// GR: import ApiProperty (mirroring CreateChatConversation.dto.ts)
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum GifType {
   Gif = 'gif',
@@ -20,6 +22,18 @@ registerEnumType(GifType, {
 export class ReplyMessageDto {
   @Field()
   id: ObjectID;
+}
+
+export enum TagType {
+  subTopic = 'subTopic',
+}
+
+export class Tag {
+  @ApiProperty({ type: String })
+  id: string;
+
+  @ApiProperty({ enum: TagType })
+  type: TagType;
 }
 
 @InputType()

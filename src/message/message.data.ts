@@ -7,7 +7,8 @@ import {
   ChatMessageModel,
 } from './models/message.model';
 import { ChatMessage, PaginatedChatMessages } from './models/message.entity';
-import { MessageDto, GetMessageDto } from './models/message.dto';
+// GR: added Tag from message model
+import { MessageDto, GetMessageDto, Tag } from './models/message.dto';
 import { ObjectID } from 'mongodb';
 import { createRichContent } from './utils/message.helper';
 import { MessageGroupedByConversationOutput } from '../conversation/models/messagesFilterInput';
@@ -164,6 +165,20 @@ export class MessageData {
     );
     if (!unlike) throw new Error('The message to unlike does not exist');
     return chatMessageToObject(unlike);
+  }
+
+  // GR: converted updateTags from conversationmodel
+  async updateTags(messageId: string, tags: Tag[]): Promise<ChatMessage> {
+    const result = await this.chatMessageModel.findOneAndUpdate(
+      { _id: messageId },
+      { $set: { tags } },
+      { new: true },
+    );
+    if (!result) throw new Error('Could not update tags on conversation');
+    const message = chatMessageToObject(result);
+    // GR: TODO identify how to update message tags
+    // this.conversationCacheManagerService.set(message, messageId);
+    return message;
   }
 
   async addReaction(

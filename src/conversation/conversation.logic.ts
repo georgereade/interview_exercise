@@ -93,6 +93,7 @@ export interface IConversationLogic {
   getLastMessages(
     lastMessageInput: LastMessageInput,
   ): Promise<LastMessageOutput[]>;
+  // GR: messageID
   updateTags(conversationId: string, tags: Tag[]): Promise<ConversationDTO>;
   getMessagesByConversation(
     messagesFilterInput: MessagesFilterInput,
@@ -280,7 +281,6 @@ export class ConversationLogic implements IConversationLogic {
   async createDirectChatConversation(
     directChatConversationDto: DirectChatConversationDto,
   ): Promise<ConversationDTO> {
-
     const memberIds = [
       directChatConversationDto.userToConverseWith,
       directChatConversationDto.currentUserId,

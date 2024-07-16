@@ -13,6 +13,8 @@ import {
   ResolveMessageDto,
   ReactionDto,
   PollOptionDto,
+  //GR: add Tag to message model and import
+  Tag,
 } from './models/message.dto';
 import { MessageData } from './message.data';
 import { IAuthenticatedUser } from '../authentication/jwt.strategy';
@@ -78,7 +80,9 @@ export class MessageLogic implements IMessageLogic {
     private conversationData: ConversationData,
     private safeguardingService: SafeguardingService,
     private userBlocks: UserBlocksLogic,
-  ) {}
+  ) // GR: added new function to MessageLogic class to update tags
+  // private updateTags: UpdateMessageTags,
+  {}
 
   async create(
     messageDto: MessageDto,
@@ -278,7 +282,6 @@ export class MessageLogic implements IMessageLogic {
     return blockedUsers.map((user) => user.blockedUserId);
   }
 
-
   async getChatConversationMessages(
     getMessageDto: GetMessageDto,
     authenticatedUser: IAuthenticatedUser,
@@ -313,7 +316,6 @@ export class MessageLogic implements IMessageLogic {
       paginatedChatMessages,
       blockedUserIds,
     );
-  
 
     return paginatedChatMessages;
   }
@@ -674,6 +676,16 @@ export class MessageLogic implements IMessageLogic {
       option,
     );
   }
+
+  // GR: add function, mirroring conversation.logic.ts. Needs more work
+  // async updateMessageTags(messageId: string, tags: Tag[]): Promise<MessageDto> {
+  //   try {
+  //     const updatedRecord = await this.messageData.updateTags(messageId, tags);
+  //     return updatedRecord;
+  //   } catch (error) {
+  //     throw new HttpException('Message not found', HttpStatus.NOT_FOUND);
+  //   }
+  // }
 
   private validateOption(
     message: ChatMessageModel,

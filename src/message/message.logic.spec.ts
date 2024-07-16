@@ -319,6 +319,23 @@ describe('MessageLogic', () => {
       };
     }
 
+    // GR: adding tags to messages can be similar to liking and unliking
+    addTag(userId: ObjectId, messageId: ObjectId) {
+      return {
+        _id: messageId,
+        text: 'Message 1',
+        senderId: userId,
+        conversationId,
+        created: new Date('2018-05-11T17:47:40.893Z'),
+        sender: { id: '5fe0cce861c8ea54018385af' },
+        conversation: { id: '5fe0cce861c8ea54018385ae' },
+        id: messageId,
+        deleted: false,
+        resolved: false,
+        likes: [],
+      };
+    }
+
     getChatConversationMessages(
       data: GetMessageDto,
     ): Promise<PaginatedChatMessages> {
@@ -549,7 +566,6 @@ describe('MessageLogic', () => {
   class MockConversationChannel {
     send = jest.fn();
   }
-
 
   class MockUserBlocksLogic implements IUserBlocksLogic {
     getBlockedUsers(

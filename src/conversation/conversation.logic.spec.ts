@@ -64,6 +64,8 @@ class MockedConversationData implements IConversationData {
   }
   updateTags(
     conversationId: string,
+    // GR:
+    // messageId: ObjectID,
     tags: Tag[],
   ): Promise<ChatConversationModel> {
     throw new Error('Method not implemented');
