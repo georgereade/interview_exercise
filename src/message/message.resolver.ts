@@ -129,7 +129,12 @@ export class MessageResolver {
     @Args('likeMessageDto') likeMessageDto: LikeMessageDto,
     @AuthenticatedUser() authenticatedUser: IAuthenticatedUser,
   ): Promise<ChatMessage> {
-    await this.messageLogic.like(likeMessageDto, authenticatedUser);
+    //GR: this function was not configured to return a value. The message is now assigned to a constant and returned by the function
+    const message = await this.messageLogic.like(
+      likeMessageDto,
+      authenticatedUser,
+    );
+    return message;
   }
 
   @Mutation(() => ChatMessage)

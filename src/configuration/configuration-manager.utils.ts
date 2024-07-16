@@ -8,19 +8,14 @@ import {
 export function getLocalConfig(): Configuration {
   return {
     auth: {
-      jwtSecret: getEnv(
-        'JWT_SECRET_KEY',
-        'ssssh',
-      ),
-      apiKeyForClients: getEnv(
-        'API_KEY_FOR_CLIENT',
-        'ssssh',
-      ),
+      jwtSecret: getEnv('JWT_SECRET_KEY', 'ssssh'),
+      apiKeyForClients: getEnv('API_KEY_FOR_CLIENT', 'ssssh'),
     },
     database: {
       connectionString: getEnv(
         'MONGO_CONNECTION_STRING',
-        'mongodb://localadmin:localadmin@127.0.0.1:27017/unibuddy-chat-local?authSource=admin',
+        // GR: removed credentials as authentication was failing
+        'mongodb://127.0.0.1:27017/unibuddy-chat-local?authSource=admin',
       ),
     },
     userService: {
@@ -41,7 +36,8 @@ export function getTestConfiguration(): TestConfiguration {
   return {
     database: {
       connectionString:
-        'mongodb://localadmin:localadmin@127.0.0.1:27017/unibuddy-chat-local?authSource=admin',
+        // GR: removed credentials as authentication was failing
+        'mongodb://127.0.0.1:27017/unibuddy-chat-local?authSource=admin',
     },
   };
 }
